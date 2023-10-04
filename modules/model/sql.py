@@ -7,3 +7,6 @@ class Database():
     def connect_db(self):
         return self.conn
 
+
+def new_database():
+    return Database().connect_db()

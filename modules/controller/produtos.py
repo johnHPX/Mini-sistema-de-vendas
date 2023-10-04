@@ -1,4 +1,4 @@
-from modules.model.sql import Database
+from modules.model.sql import new_database
 
 class Produtos():
     def __init__(self):
@@ -7,7 +7,7 @@ class Produtos():
 
     def cadastrar(self, id:str, nome:str, preco:float, quantidade:int, descricao:str):
         try:
-            conn = Database().connect_db()
+            conn = new_database()
             cursor = conn.cursor()
             cursor.execute("INSERT INTO produtos (id, nome, preco, quantidade, descricao) VALUES (?,?,?,?,?)", (id, nome, preco, quantidade, descricao))
             conn.commit()
@@ -22,7 +22,7 @@ class Produtos():
 
     def listar(self)->list[dict]:
         try:
-            conn = Database().connect_db()
+            conn = new_database()
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM produtos")
             dto = list()
@@ -46,7 +46,7 @@ class Produtos():
     
     def buscar(self, id:str):
         try:
-            conn = Database().connect_db()
+            conn = new_database()
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM produtos WHERE id = ?", (id,))
             obj = dict()
@@ -68,7 +68,7 @@ class Produtos():
 
     def editar(self, id:str, nome:str, preco:float, quantidade:int, descricao:str):
         try:
-            conn = Database().connect_db()
+            conn = new_database()
             cursor = conn.cursor()
             cursor.execute("UPDATE produtos SET nome = ?, preco = ?, quantidade = ?, descricao = ? WHERE id = ?", (nome, preco, quantidade, descricao, id))
             conn.commit()
@@ -83,7 +83,7 @@ class Produtos():
 
     def remover(self, id:str):
         try:
-            conn = Database().connect_db()
+            conn = new_database()
             cursor = conn.cursor()
             cursor.execute("DELETE FROM produtos WHERE id = ?", (id,))
             conn.commit()
